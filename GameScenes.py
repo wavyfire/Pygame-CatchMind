@@ -14,9 +14,9 @@ class Scenes(metaclass=ABCMeta):
     def startScene(self, screen):
         pass
 
-    #다음 씬으로 넘어갈 때 현재 씬의 위젯들을 모두 제거
+    #어떤 버튼이 클릭되었는지 확인
     @abstractmethod
-    def killScene(self):
+    def clickCheck(self):
         pass
 
 class Main(Scenes):
@@ -25,8 +25,10 @@ class Main(Scenes):
         super().__init__()
         self.QuitButton = Button((1180,0), 'images/QuitButton.png')
         self.HelpButton = Button((0,0), 'images/HelpButton.png')
-        self.StartButton = Button((700, 500), 'images/StartButton.png')
+        self.StartButton = Button((700, 300), 'images/StartButton.png')
         self.Title = Font("Catch-Mind", (0,0,0), 170, (630, 150))
+        self.GameDiscription = Font("Numbers of players : 2 ~ 4", (0,0,0), 50, (650, 500))
+        self.Trigger = False
 
     def startScene(self, screen):
 
@@ -34,54 +36,65 @@ class Main(Scenes):
         self.HelpButton.draw(screen)
         self.StartButton.draw(screen)
         self.Title.draw(screen)
+        self.GameDiscription.draw(screen)
 
-    def killScene(self):
-        pass
+    def clickCheck(self):
+
+        if self.QuitButton.clickChecker():
+            return 'Quit'
+        if self.HelpButton.clickChecker():
+            return 'Help'
+        if self.StartButton.clickChecker():
+            return 'Next'
 
 class ReadyDraw(Scenes):
 
     def __init__(self):
         super().__init__()
-        pass
+        self.QuitButton = Button((1180,0), 'images/QuitButton.png')
+        self.Trigger = False
 
-    def startScene(self, screen ):
-        pass
+    def startScene(self, screen):
+        self.QuitButton.draw(screen)
 
-    def killScene(self):
+    def clickCheck(self):
         pass
 
 class Drawing(Scenes):
 
     def __init__(self):
         super().__init__()
+        self.Trigger = 0
         pass
 
     def startScene(self,screen):
         pass
 
-    def killScene(self):
+    def clickCheck(self):
         pass
 
 class Guess(Scenes):
 
     def __init__(self):
         super().__init__()
+        self.Trigger = 0
         pass
 
     def startScene(self,screen):
         pass
 
-    def killScene(self):
+    def clickCheck(self):
         pass
 
 class Result(Scenes):
 
     def __init__(self):
         super().__init__()
+        self.Trigger = 0
         pass
 
     def startScene(self,screen):
         pass
 
-    def killScene(self):
+    def clickCheck(self):
         pass

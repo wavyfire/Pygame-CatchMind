@@ -12,6 +12,11 @@ class Button(pygame.sprite.Sprite):
     def draw(self, screen):
         screen.blit(self.image, self.rect.center)
 
+    def clickChecker(self):
+        mouseposition = pygame.mouse.get_pos()
+        if mouseposition > self.rect.topleft and mouseposition < self.rect.bottomright:
+            return True
+
 #글자 생성 클래스
 class Font:
 
