@@ -148,10 +148,17 @@ class SceneLoader:
                             size = 3
                         if self.Drawing.clickCheck() == 'Eraser':
                             screen.blit(self.background, (0, 0)) # 화면 저장 기능이 없어서 덮어버려야합니다.
+                        if self.Drawing.clickCheck() == 'Quit':
+                            done = True
+                        if self.Drawing.clickCheck() == 'Done':
+                            self.Drawing.Off()
+                            self.Guess.On()
 
                     # Guess Scene Click Event
                     if self.Guess.Trigger:
-                        pass
+                        if self.Guess.clickCheck() == 'BackToDraw':
+                            self.Guess.Off()
+                            self.Drawing.On()
 
                     # Result Scene Click Event
                     if self.Result.Trigger:

@@ -189,17 +189,21 @@ class Drawing(Scenes):
 
     def __init__(self):
         super().__init__()
+        self.DrawBackGround = pygame.image.load('images/DrawBackGround.png')
         self.SketchBook = Button((150, 0), 'images/SketchBook.png')
-        self.PickRed = Button((10,680), 'images/PickRed.png')
-        self.PickBlue = Button((50,680), 'images/PickBlue.png')
-        self.PickBlack = Button((90,680), 'images/PickBlack.png')
-        self.DotSize1 = Button((1100,680), 'images/DotSize1.png')
-        self.DotSize2 = Button((1140,680), 'images/DotSize2.png')
-        self.DotSize3 = Button((1180,680), 'images/DotSize3.png')
+        self.PickRed = Button((10, 680), 'images/PickRed.png')
+        self.PickBlue = Button((50, 680), 'images/PickBlue.png')
+        self.PickBlack = Button((90, 680), 'images/PickBlack.png')
+        self.DotSize1 = Button((1100, 680), 'images/DotSize1.png')
+        self.DotSize2 = Button((1140, 680), 'images/DotSize2.png')
+        self.DotSize3 = Button((1180, 680), 'images/DotSize3.png')
         self.Eraser = Button((1138, 640), 'images/Eraser.png')
+        self.DoneButton = Button((0, 0), 'images/Done.png')
+        self.QuitButton = Button((1180, 0), 'images/QuitButton.png')
         self.Trigger = 0
 
     def startScene(self,screen):
+        screen.blit(self.DrawBackGround, (0, 0))
         self.SketchBook.draw(screen)
         self.PickRed.draw(screen)
         self.PickBlue.draw(screen)
@@ -208,6 +212,8 @@ class Drawing(Scenes):
         self.DotSize2.draw(screen)
         self.DotSize3.draw(screen)
         self.Eraser.draw(screen)
+        self.DoneButton.draw(screen)
+        self.QuitButton.draw(screen)
 
     def clickCheck(self):
         if self.SketchBook.clickChecker():
@@ -226,6 +232,10 @@ class Drawing(Scenes):
             return 'DotSize3'
         if self.Eraser.clickChecker():
             return 'Eraser'
+        if self.DoneButton.clickChecker():
+            return 'Done'
+        if self.QuitButton.clickChecker():
+            return 'Quit'
 
     def Sketch(self, screen, color, size, mouseX, mouseY):
             for i in range(0, size*2):
@@ -264,14 +274,18 @@ class Guess(Scenes):
 
     def __init__(self):
         super().__init__()
+        self.BackToDraw = Button((10, 70), 'images/BackToDraw.png')
+        self.DrawBackGround = pygame.image.load('images/GuessBackGround.png')
         self.Trigger = 0
-        pass
 
     def startScene(self,screen):
-        pass
+        screen.blit(self.DrawBackGround, (0, 0))
+        self.BackToDraw.draw(screen)
+
 
     def clickCheck(self):
-        pass
+        if self.BackToDraw.clickChecker():
+            return 'BackToDraw'
 
     def On(self):
         self.Trigger = True
