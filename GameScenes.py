@@ -276,16 +276,20 @@ class Guess(Scenes):
         super().__init__()
         self.BackToDraw = Button((10, 70), 'images/BackToDraw.png')
         self.DrawBackGround = pygame.image.load('images/GuessBackGround.png')
+        self.QuitButton = Button((1180, 0), 'images/QuitButton.png')
         self.Trigger = 0
 
     def startScene(self,screen):
         screen.blit(self.DrawBackGround, (0, 0))
         self.BackToDraw.draw(screen)
+        self.QuitButton.draw(screen)
 
 
     def clickCheck(self):
         if self.BackToDraw.clickChecker():
             return 'BackToDraw'
+        if self.QuitButton.clickChecker():
+            return 'Quit'
 
     def On(self):
         self.Trigger = True

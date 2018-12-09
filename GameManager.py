@@ -162,6 +162,8 @@ class SceneLoader:
                         if self.Guess.clickCheck() == 'BackToDraw':
                             self.Guess.Off()
                             self.Drawing.On()
+                        if self.Drawing.clickCheck() == 'Quit':
+                            done = True
 
                     # Result Scene Click Event
                     if self.Result.Trigger:
