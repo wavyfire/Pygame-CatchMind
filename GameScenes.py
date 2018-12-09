@@ -1,6 +1,7 @@
 from GameWidgets import Button, Font
 import WordDB
 import ScoreDB
+import pygame
 from abc import *
 
 ScoreHandler = ScoreDB.ScoreHandler()
@@ -34,7 +35,7 @@ class Main(Scenes):
         super().__init__()
         self.QuitButton = Button((1180,0), 'images/QuitButton.png')
         self.HelpButton = Button((0,0), 'images/HelpButton.png')
-        self.StartButton = Button((730, 300), 'images/StartButton.png')
+        self.StartButton = Button((800, 300), 'images/StartButton.png')
         self.Title = Font("Catch-Mind", (0,0,0), 170, (630, 150))
         self.GameDiscription = Font("Numbers of players : 2 ~ 4", (0,0,0), 50, (620, 500))
         self.PlayerNumbers2 = Button((400,300), 'images/2.png')
@@ -56,6 +57,17 @@ class Main(Scenes):
         self.PlayerNumbers2.draw(screen)
         self.PlayerNumbers3.draw(screen)
         self.PlayerNumbers4.draw(screen)
+
+    def addScene(self, screen, playerNum):
+        if playerNum == 2:
+            self.SelectPlayerPanel = Button((400, 300), 'images/Check.png')
+            self.SelectPlayerPanel.draw(screen)
+        if playerNum == 3:
+            self.SelectPlayerPanel = Button((510, 300), 'images/Check.png')
+            self.SelectPlayerPanel.draw(screen)
+        if playerNum == 4:
+            self.SelectPlayerPanel = Button((620, 300), 'images/Check.png')
+            self.SelectPlayerPanel.draw(screen)
 
     def printMessage(self, screen):
 
@@ -177,14 +189,69 @@ class Drawing(Scenes):
 
     def __init__(self):
         super().__init__()
+        self.SketchBook = Button((150, 0), 'images/SketchBook.png')
+        self.PickRed = Button((10,680), 'images/PickRed.png')
+        self.PickBlue = Button((50,680), 'images/PickBlue.png')
+        self.PickBlack = Button((90,680), 'images/PickBlack.png')
+        self.DotSize1 = Button((1100,680), 'images/DotSize1.png')
+        self.DotSize2 = Button((1140,680), 'images/DotSize2.png')
+        self.DotSize3 = Button((1180,680), 'images/DotSize3.png')
+        self.Eraser = Button((1138, 640), 'images/Eraser.png')
         self.Trigger = 0
-        pass
 
     def startScene(self,screen):
-        pass
+        self.SketchBook.draw(screen)
+        self.PickRed.draw(screen)
+        self.PickBlue.draw(screen)
+        self.PickBlack.draw(screen)
+        self.DotSize1.draw(screen)
+        self.DotSize2.draw(screen)
+        self.DotSize3.draw(screen)
+        self.Eraser.draw(screen)
 
     def clickCheck(self):
-        pass
+        if self.SketchBook.clickChecker():
+            return 'SketchBook'
+        if self.PickRed.clickChecker():
+            return 'PickRed'
+        if self.PickBlue.clickChecker():
+            return 'PickBlue'
+        if self.PickBlack.clickChecker():
+            return 'PickBlack'
+        if self.DotSize1.clickChecker():
+            return 'DotSize1'
+        if self.DotSize2.clickChecker():
+            return 'DotSize2'
+        if self.DotSize3.clickChecker():
+            return 'DotSize3'
+        if self.Eraser.clickChecker():
+            return 'Eraser'
+
+    def Sketch(self, screen, color, size, mouseX, mouseY):
+            for i in range(0, size*2):
+                for j in range(0, size*2):
+                    pixelArray = pygame.PixelArray(screen)
+                    pixelArray[mouseX + i][mouseY + j] = color
+                    del pixelArray  # 화면이 Lock 되는것을 막기 위함
+
+    def addScene(self, screen, color, dotsize):
+        if dotsize == 1:
+            self.DotCheck = Button((1100, 680), 'images/DotCheck.png')
+            self.CheckRemover = Button((1100,680), 'images/CheckRemover.png')
+            self.CheckRemover.draw(screen)
+            self.DotCheck.draw(screen)
+
+        if dotsize == 2:
+            self.DotCheck = Button((1140, 680), 'images/DotCheck.png')
+            self.CheckRemover = Button((1100, 680), 'images/CheckRemover.png')
+            self.CheckRemover.draw(screen)
+            self.DotCheck.draw(screen)
+
+        if dotsize == 3:
+            self.DotCheck = Button((1180, 680), 'images/DotCheck.png')
+            self.CheckRemover = Button((1100, 680), 'images/CheckRemover.png')
+            self.CheckRemover.draw(screen)
+            self.DotCheck.draw(screen)
 
     def On(self):
         self.Trigger = True

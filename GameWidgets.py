@@ -13,8 +13,12 @@ class Button(pygame.sprite.Sprite):
         screen.blit(self.image, self.rect.center)
 
     def clickChecker(self):
-        mouseposition = pygame.mouse.get_pos()
-        if mouseposition > self.rect.topleft and mouseposition < self.rect.bottomright:
+        mouseX, mouseY = pygame.mouse.get_pos()
+        center = self.rect.center
+        w = self.rect.width
+        h = self.rect.height
+        if (center[0] <= mouseX < center[0] + (w) and center[1]<= mouseY < center[1] + h):
+            # 이미지 생성 위치와 이미지 크기가 안맞아서 이렇게 해야합니다.
             return True
 
 #글자 생성 클래스
