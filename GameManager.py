@@ -102,12 +102,15 @@ class SceneLoader:
 
                         elif self.Main.clickCheck() == '2 Players':
                             self.Main.setPlayers(2)
+                            screen.blit(self.background, (0, 0))
 
                         elif self.Main.clickCheck() == '3 Players':
                             self.Main.setPlayers(3)
+                            screen.blit(self.background, (0, 0))
 
                         elif self.Main.clickCheck() == '4 Players':
                             self.Main.setPlayers(4)
+                            screen.blit(self.background, (0, 0))
 
                     if self.Help.Trigger:
                         if self.Help.clickCheck() == 'Quit':
