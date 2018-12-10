@@ -100,7 +100,7 @@ class SceneLoader:
                                 print("GuessWord = " + guessword)  # Debug
                                 self.Guess.DrawInput(guessword, screen)
                             elif name == 'backspace':
-                                guessword = guessword.rstrip(guessword[-1])
+                                guessword = guessword[:-1]
                                 self.Guess.DrawInput(guessword, screen)
                             elif name == 'return':
                                 if guessword == self.ReadyDraw.WordHandler.answer:
@@ -139,14 +139,17 @@ class SceneLoader:
 
                         elif self.Main.clickCheck() == '2 Players':
                             self.Main.setPlayers(2)
+                            self.ReadyDraw.setScoreBoard()
                             screen.blit(self.background, (0, 0))
 
                         elif self.Main.clickCheck() == '3 Players':
                             self.Main.setPlayers(3)
+                            self.ReadyDraw.setScoreBoard()
                             screen.blit(self.background, (0, 0))
 
                         elif self.Main.clickCheck() == '4 Players':
                             self.Main.setPlayers(4)
+                            self.ReadyDraw.setScoreBoard()
                             screen.blit(self.background, (0, 0))
 
                     if self.Help.Trigger:

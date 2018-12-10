@@ -59,7 +59,7 @@ class ScoreHandler:
         text = ''
         for player in self.ScoreRecord:
             for key, value in player.items():
-                text += key + ' : '+ str(value) +'\n'
+                text += key + ' : '+ str(value) +'.'
         return text
 
 

@@ -143,7 +143,6 @@ class ReadyDraw(Scenes):
         self.ReadyButton = Button((510,500), 'images/ReadyButton.png')
         self.RegetWordButton = Button((0,0), 'images/RegetWord.png')
         self.ScoreBoard = Button((0,100), 'images/ScoreBoard.png')
-        self.ScoreBoardText = Font(ScoreHandler.getScore(), (0,0,0), 50, (20, 100))
 
         self.WordText = None
 
@@ -161,7 +160,17 @@ class ReadyDraw(Scenes):
         self.ReadyButton.draw(screen)
         self.RegetWordButton.draw(screen)
         self.ScoreBoard.draw(screen)
-        self.ScoreBoardText.draw(screen)
+        for text in self.ScoreTextList:
+            text.draw(screen)
+
+    def setScoreBoard(self):
+        self.ScoreTextList = []
+        text = ScoreHandler.getScore().split('.')
+
+        y = 150
+        for scoretext in text:
+            self.ScoreTextList.append(Font((scoretext), (0,0,0), 30, (120, y)))
+            y += 50
 
     def printMessage(self, screen):
         self.WordText.draw(screen)
@@ -357,8 +366,6 @@ class Guess(Scenes):
 
     def Correct(self, screen):
         self.CorrectMark.draw(screen)
-
-
 
     def On(self):
         self.Trigger = True
