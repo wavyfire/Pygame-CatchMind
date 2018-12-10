@@ -91,7 +91,7 @@ class ScoreHandler:
             for key, value in player.items():
                 if value > othervalue:
                     othervalue = value
-                    otherplayer = player
+                    otherplayer = key
                 else:
                     return otherplayer
 

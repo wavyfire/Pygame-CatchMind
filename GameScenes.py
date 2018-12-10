@@ -402,23 +402,36 @@ class Result(Scenes):
 
     def __init__(self):
         super().__init__()
-        self.ScoreBoard = Button((400, 40), 'images/ScoreBoard.png')
-        self.QuitButton = Button((650, 360), 'images/QuitButton.png')
+        self.QuitButton = Button((1180, 0), 'images/QuitButton.png')
+
+        self.Trigger_ScoreBoard = 0
         self.Trigger = 0
 
     def startScene(self, screen):
-        self.ScoreBoard.draw(screen)
         self.QuitButton.draw(screen)
 
+    def setScoreBoard(self):
+        self.ScoreTextList = []
+        text = ScoreHandler.getScore().split('.')
+
+        y = 300
+        for scoretext in text:
+            self.ScoreTextList.append(Font((scoretext), (0,0,0), 30, (600, y)))
+            y += 50
+
+    def printScoreBoard(self, screen):
+        for text in self.ScoreTextList:
+            text.draw(screen)
+
+
     def clickCheck(self):
-        if self.ScoreBoard.clickChecker():
-            return "ScoreBoard"
         if self.QuitButton.clickChecker():
             return "Quit"
 
     def WinnerCheck(self,screen):
         winner = ScoreHandler.Winner()
-        self.Title = Font((winner, " Is WIN!"), (255, 0, 0), 170, (630, 150))
+        text = winner + " Is WIN!"
+        self.Title = Font(winner + " Is WIN!", (255, 0, 0), 170, (630, 150))
         self.Title.draw(screen)
 
     def On(self):
