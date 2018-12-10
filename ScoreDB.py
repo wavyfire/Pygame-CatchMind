@@ -4,6 +4,7 @@ class ScoreHandler:
     def __init__(self):
 
         self.PlayerNumbers = 0
+        self.NowPlaying = 0
         self.ScoreRecord = []
 
     #Player 수를 결정
@@ -14,6 +15,29 @@ class ScoreHandler:
             dict = {}
             dict['player' + str(i)] = 0
             self.ScoreRecord.append(dict)
+
+    def getPlayers(self):
+        return self.PlayerNumbers
+
+    # 처음 턴 세팅
+    def setTurn(self):
+
+        self.NowPlaying = 1
+
+    def getTurn(self):
+
+        return self.NowPlaying
+
+    # 턴을 넘길 때 사용
+    def changeTurn(self):
+        try:
+            while self.NowPlaying <= self.PlayerNumbers:
+                self.NowPlaying += 1
+                break
+
+            self.NowPlaying = 1
+        except:
+            print("Set PlayerNumbers First!")
 
     #해당 Player에게 점수
     def raiseScore(self, playernumber, score):
