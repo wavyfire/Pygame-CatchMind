@@ -103,11 +103,12 @@ class SceneLoader:
                                 guessword = guessword[:-1]
                                 self.Guess.DrawInput(guessword, screen)
                             elif name == 'return':
-                                if guessword == self.ReadyDraw.WordHandler.answer:
+                                if guessword == self.ReadyDraw.WordHandler.answer:  # 맞았을 때
                                     self.Guess.Correct(screen)
                                     reDraw = True
                                     keyInput = False
-                                elif guessword != self.ReadyDraw.WordHandler.answer:
+                                    self.Guess.NextTrun()
+                                elif guessword != self.ReadyDraw.WordHandler.answer:  # 틀렸을 때
                                     self.Guess.Wrong(screen)
                                     keyInput = False
 

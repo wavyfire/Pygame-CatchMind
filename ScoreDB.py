@@ -33,6 +33,7 @@ class ScoreHandler:
         try:
             while self.NowPlaying <= self.PlayerNumbers:
                 self.NowPlaying += 1
+                print("NowP" + self.NowPlaying) # Debug
                 break
 
             self.NowPlaying = 1
