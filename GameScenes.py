@@ -287,6 +287,8 @@ class Guess(Scenes):
         self.QuitButton = Button((1180, 0), 'images/QuitButton.png')
         self.InputAnswer = Button((140, 630), 'images/InputAnswer.png')
         self.AnswerRemover = Button((140, 630), 'images/AnswerRemover.png')
+        self.WrongCheck = Button((420, 640), 'images/WrongMark.png')
+        self.CorrectMark = Button((420,640), 'images/CorrectMark.png')
 
         # PlayerButton 자체는 startScene() 에서 생성 : 플레이어 수가 정해지고 나서 버튼 수가 결정되기 때문
         self.PlayerButtonList = []
@@ -349,6 +351,13 @@ class Guess(Scenes):
         Dic = WordDB.FileHandler.CorrectInput(self)
         if name in Dic:
             return True
+
+    def Wrong(self, screen):
+        self.WrongCheck.draw(screen)
+
+    def Correct(self, screen):
+        self.CorrectMark.draw(screen)
+
 
 
     def On(self):

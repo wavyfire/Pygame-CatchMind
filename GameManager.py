@@ -30,8 +30,9 @@ class SceneLoader:
         color = (0,0,0) # Drawing을 위한 변수...
 
         keyInput = False  # Key가 여러개 입력되는 것을 방지하기 위한 Bool
-        textLoc = 180  # 처음 text가 배치될 x좌표값
         guessword = ""  # text가 입력되면서 저장될 값
+
+        reDraw = False # Guess -> ReadyDraw 로 씬 전환.
 
         clock = pygame.time.Clock()
 
@@ -94,7 +95,6 @@ class SceneLoader:
                         if press[i] == 1:
                             name = pygame.key.name(i)
                             print("Input " + name)  # Debug
-                            text = self.Guess.Input(name)
                             if self.Guess.DicCheck(name) :
                                 guessword += name
                                 print("GuessWord = " + guessword)  # Debug
@@ -103,8 +103,12 @@ class SceneLoader:
                                 guessword = guessword.rstrip(guessword[-1])
                                 self.Guess.DrawInput(guessword, screen)
                             elif name == 'return':
-                                if guessword == self.ReadyDraw.WordHandler.answer :
-                                    print("on")
+                                if guessword == self.ReadyDraw.WordHandler.answer:
+                                    self.Guess.Correct(screen)
+                                    reDraw = True
+                                elif guessword != self.ReadyDraw.WordHandler.answer:
+                                    self.Guess.Wrong(screen)
+
 
                 if event.type == pygame.QUIT:
                     done = True
@@ -151,6 +155,7 @@ class SceneLoader:
                             self.Main.On()
                             self.Help.Off()
                             screen.blit(self.background, (0,0))
+                            pygame.display.flip()
 
                     # ReadyDraw Scene Click Event
                     if self.ReadyDraw.Trigger:
@@ -165,6 +170,7 @@ class SceneLoader:
                             self.ReadyDraw.Off()
                             self.Drawing.On()
                             screen.blit(self.background, (0, 0))
+                            pygame.display.flip()
 
                     # Drawing Scene Click Event
                     if self.Drawing.Trigger:
@@ -206,6 +212,17 @@ class SceneLoader:
                             done = True
                         if self.Guess.clickCheck() == 'InputAnswer':
                             keyInput = True
+                        if event.type == pygame.MOUSEBUTTONDOWN and reDraw == True:
+                            self.Guess.Off()
+                            self.Drawing.Off()
+                            self.ReadyDraw.On()
+                            self.ReadyDraw.getWord()
+                            self.ReadyDraw.setWordText()
+                            self.ReadyDraw.Trigger_Message = True
+                            reDraw = False
+                            screen.blit(self.background, (0, 0))
+                            pygame.display.flip()
+
 
                     # Result Scene Click Event
                     if self.Result.Trigger:
