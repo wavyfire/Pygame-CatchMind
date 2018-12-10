@@ -285,6 +285,8 @@ class Guess(Scenes):
         self.BackToDraw = Button((10, 70), 'images/BackToDraw.png')
         self.DrawBackGround = pygame.image.load('images/GuessBackGround.png')
         self.QuitButton = Button((1180, 0), 'images/QuitButton.png')
+        self.InputAnswer = Button((140, 630), 'images/InputAnswer.png')
+        self.AnswerRemover = Button((140, 630), 'images/AnswerRemover.png')
 
         # PlayerButton 자체는 startScene() 에서 생성 : 플레이어 수가 정해지고 나서 버튼 수가 결정되기 때문
         self.PlayerButtonList = []
@@ -297,6 +299,7 @@ class Guess(Scenes):
         screen.blit(self.DrawBackGround, (0, 0))
         self.BackToDraw.draw(screen)
         self.QuitButton.draw(screen)
+        self.InputAnswer.draw(screen)
 
         # Player수, Turn에 따른 버튼 출력과 check 표시를 용이하게 하기 위해 튜플로 번호 및 좌표 관리
         # Player수에 맞춰서 버튼 생성
@@ -330,6 +333,23 @@ class Guess(Scenes):
         for playerbutton in self.PlayerButtonList:
             if playerbutton[0].clickChecker():
                 return playerbutton[3]
+        if self.InputAnswer.clickChecker():
+            return 'InputAnswer'
+
+    def Input(self, name):
+        text = Font.guessInput(self, name)
+        return text
+
+    def DrawInput(self, input, screen):
+        txt = Font(input, (0, 0, 0), 50, (420, 660))
+        self.AnswerRemover.draw(screen)
+        txt.draw(screen)
+
+    def DicCheck(self, name):
+        Dic = WordDB.FileHandler.CorrectInput(self)
+        if name in Dic:
+            return True
+
 
     def On(self):
         self.Trigger = True

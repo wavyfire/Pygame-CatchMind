@@ -28,6 +28,11 @@ class SceneLoader:
         mouseflag = False # Drawing을 위한 변수
         size = 1 # Drawing을 위한 변수....
         color = (0,0,0) # Drawing을 위한 변수...
+
+        keyInput = False  # Key가 여러개 입력되는 것을 방지하기 위한 Bool
+        textLoc = 180  # 처음 text가 배치될 x좌표값
+        guessword = ""  # text가 입력되면서 저장될 값
+
         clock = pygame.time.Clock()
 
         # Main Scene은 첫 실행때 무조건 출력
@@ -82,6 +87,24 @@ class SceneLoader:
 
                 if event.type == pygame.MOUSEBUTTONUP:
                     mouseflag = False # 그림판 기능 때문에 추가된 줄.
+
+                if pygame.key.get_focused() and keyInput == True and event.type == pygame.KEYDOWN: # Guess에서, 키보드 입력을 받기 위한 구문.
+                    press = pygame.key.get_pressed()
+                    for i in range(0, len(press)):
+                        if press[i] == 1:
+                            name = pygame.key.name(i)
+                            print("Input " + name)  # Debug
+                            text = self.Guess.Input(name)
+                            if self.Guess.DicCheck(name) :
+                                guessword += name
+                                print("GuessWord = " + guessword)  # Debug
+                                self.Guess.DrawInput(guessword, screen)
+                            elif name == 'backspace':
+                                guessword = guessword.rstrip(guessword[-1])
+                                self.Guess.DrawInput(guessword, screen)
+                            elif name == 'return':
+                                if guessword == self.ReadyDraw.WordHandler.answer :
+                                    print("on")
 
                 if event.type == pygame.QUIT:
                     done = True
@@ -170,6 +193,7 @@ class SceneLoader:
                         if self.Guess.clickCheck() == 'BackToDraw':
                             self.Guess.Off()
                             self.Drawing.On()
+                            keyInput = False
                         if self.Guess.clickCheck() == 'Player 1':
                             self.Guess.Trigger_PlayerCheck = 1
                         if self.Guess.clickCheck() == 'Player 2':
@@ -178,8 +202,10 @@ class SceneLoader:
                             self.Guess.Trigger_PlayerCheck = 3
                         if self.Guess.clickCheck() == 'Player 4':
                             self.Guess.Trigger_PlayerCheck = 4
-                        if self.Drawing.clickCheck() == 'Quit':
+                        if self.Guess.clickCheck() == 'Quit':
                             done = True
+                        if self.Guess.clickCheck() == 'InputAnswer':
+                            keyInput = True
 
                     # Result Scene Click Event
                     if self.Result.Trigger:

@@ -41,3 +41,10 @@ class Font:
 
     def draw(self, screen):
         screen.blit(self.textObj, self.textRect)
+
+    def guessInput(self, name):
+        pygame.font.init()
+        f1 = pygame.font.SysFont("comicsansms", 24)
+        text = f1.render(name, True, (0,0,0))
+        pygame.font.quit()
+        return text

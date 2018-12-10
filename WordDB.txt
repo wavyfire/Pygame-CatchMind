@@ -1,5 +1,5 @@
-CAT
-DOG
-BEAR
-TREE
-ELEPHANT
+cat
+dog
+bear
+tree
+elephant
