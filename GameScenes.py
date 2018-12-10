@@ -374,6 +374,19 @@ class Guess(Scenes):
     def NextTrun(self):
         ScoreHandler.changeTurn()
 
+    def AddScore(self, player):
+        ScoreHandler.raiseScore(player, 1)
+
+    def LimitCheck(self):
+        ScoreHandler.makeLimit()
+
+    def NowQuizNum(self):
+        return ScoreHandler.NowQuizNum()
+
+    def NowQuizLimit(self):
+        return ScoreHandler.QuizLimit()
+
+
     def On(self):
         self.Trigger = True
 

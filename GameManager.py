@@ -104,10 +104,18 @@ class SceneLoader:
                                 self.Guess.DrawInput(guessword, screen)
                             elif name == 'return':
                                 if guessword == self.ReadyDraw.WordHandler.answer:  # 맞았을 때
-                                    self.Guess.Correct(screen)
-                                    reDraw = True
-                                    keyInput = False
-                                    self.Guess.NextTrun()
+                                    a = self.Guess.NowQuizNum()
+                                    b = self.Guess.NowQuizLimit()
+                                    if a <= b :
+                                        self.Guess.Correct(screen)
+                                        c = self.Guess.Trigger_PlayerCheck
+                                        d = str("player" + str(c))
+                                        self.Guess.AddScore(d)
+                                        reDraw = True
+                                        keyInput = False
+                                        self.Guess.NextTrun()
+                                    elif a > b :
+                                        print("end")
                                 elif guessword != self.ReadyDraw.WordHandler.answer:  # 틀렸을 때
                                     self.Guess.Wrong(screen)
                                     keyInput = False
@@ -135,6 +143,7 @@ class SceneLoader:
                                 self.Main.Off()
                                 self.ReadyDraw.Trigger = True
                                 screen.blit(self.background, (0,0))
+                                self.Guess.LimitCheck()  # 실행될 때 Limit값을 생성함.
                             else:
                                 self.Main.Trigger_Message = True
 

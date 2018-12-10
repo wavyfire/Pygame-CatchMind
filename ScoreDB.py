@@ -6,6 +6,8 @@ class ScoreHandler:
         self.PlayerNumbers = 0
         self.NowPlaying = 0
         self.ScoreRecord = []
+        self.Limit = 0
+        self.NowQuizNumber = 0
 
     #Player 수를 결정
     def setPlayers(self, playernumbers):
@@ -40,11 +42,14 @@ class ScoreHandler:
         except:
             print("Set PlayerNumbers First!")
 
-    #해당 Player에게 점수
-    def raiseScore(self, playernumber, score):
-
-        player = self.ScoreRecord[playernumber]
-        player['player'] += score
+    # 해당 Player에게 점수
+    def raiseScore(self, scoredplayer, score):
+        for player in self.ScoreRecord:
+            for key, value in player.items():
+                if key == scoredplayer:
+                    value += score
+        self.NowQuizNumber += 1
+        print(self.ScoreRecord)  # Debug
 
     #player 수가 결정되었는지를 검사
     def playerCheck(self):
@@ -62,6 +67,22 @@ class ScoreHandler:
             for key, value in player.items():
                 text += key + ' : '+ str(value) +'.'
         return text
+
+    def makeLimit(self):
+        if self.PlayerNumbers == 2:
+            self.Limit = 5
+        if self.PlayerNumbers == 3:
+            self.Limit = 7
+        if self.PlayerNumbers == 4:
+            self.Limit = 9
+
+    def NowQuizNum(self):
+        return self.NowQuizNumber
+
+    def QuizLimit(self):
+        return self.Limit
+
+
 
 
 
