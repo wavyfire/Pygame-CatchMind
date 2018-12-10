@@ -33,21 +33,23 @@ class ScoreHandler:
     # 턴을 넘길 때 사용
     def changeTurn(self):
         try:
-            while self.NowPlaying <= self.PlayerNumbers:
+            if self.NowPlaying < self.PlayerNumbers:
                 self.NowPlaying += 1
-                print("NowP" + self.NowPlaying) # Debug
-                break
+            else:
+                self.NowPlaying = 1
 
-            self.NowPlaying = 1
         except:
             print("Set PlayerNumbers First!")
+            # 해당 Player에게 점수
 
-    # 해당 Player에게 점수
     def raiseScore(self, scoredplayer, score):
         for player in self.ScoreRecord:
+            print(player)
             for key, value in player.items():
                 if key == scoredplayer:
-                    value += score
+                    person = key
+                    player[person] += score
+
         self.NowQuizNumber += 1
         print(self.ScoreRecord)  # Debug
 
@@ -81,6 +83,18 @@ class ScoreHandler:
 
     def QuizLimit(self):
         return self.Limit
+
+    def Winner(self):
+        othervalue = 0
+        otherplayer = ""
+        for player in self.ScoreRecord:
+            for key, value in player.items():
+                if value > othervalue:
+                    othervalue = value
+                    otherplayer = player
+                else:
+                    return otherplayer
+
 
 
 

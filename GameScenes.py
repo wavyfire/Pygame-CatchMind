@@ -44,7 +44,6 @@ class Main(Scenes):
         self.Alarm = Font("Choose Player Number", (255,0,0), 50, (620, 430))
 
         self.Trigger_Message = False
-
         self.Trigger = False
 
     def startScene(self, screen):
@@ -147,6 +146,7 @@ class ReadyDraw(Scenes):
         self.WordText = None
 
         self.Trigger = False
+        self.Trigger_ScoreBoard = False
         self.Trigger_Message = False
 
         self.WordHandler = WordDB.FileHandler()
@@ -160,8 +160,6 @@ class ReadyDraw(Scenes):
         self.ReadyButton.draw(screen)
         self.RegetWordButton.draw(screen)
         self.ScoreBoard.draw(screen)
-        for text in self.ScoreTextList:
-            text.draw(screen)
 
     def setScoreBoard(self):
         self.ScoreTextList = []
@@ -171,6 +169,10 @@ class ReadyDraw(Scenes):
         for scoretext in text:
             self.ScoreTextList.append(Font((scoretext), (0,0,0), 30, (120, y)))
             y += 50
+
+    def printScoreBoard(self, screen):
+        for text in self.ScoreTextList:
+            text.draw(screen)
 
     def printMessage(self, screen):
         self.WordText.draw(screen)
@@ -386,6 +388,8 @@ class Guess(Scenes):
     def NowQuizLimit(self):
         return ScoreHandler.QuizLimit()
 
+    def NowPlaying(self):
+        return ScoreHandler.NowPlaying
 
     def On(self):
         self.Trigger = True
@@ -398,14 +402,24 @@ class Result(Scenes):
 
     def __init__(self):
         super().__init__()
+        self.ScoreBoard = Button((400, 40), 'images/ScoreBoard.png')
+        self.QuitButton = Button((650, 360), 'images/QuitButton.png')
         self.Trigger = 0
-        pass
 
-    def startScene(self,screen):
-        pass
+    def startScene(self, screen):
+        self.ScoreBoard.draw(screen)
+        self.QuitButton.draw(screen)
 
     def clickCheck(self):
-        pass
+        if self.ScoreBoard.clickChecker():
+            return "ScoreBoard"
+        if self.QuitButton.clickChecker():
+            return "Quit"
+
+    def WinnerCheck(self,screen):
+        winner = ScoreHandler.Winner()
+        self.Title = Font((winner, " Is WIN!"), (255, 0, 0), 170, (630, 150))
+        self.Title.draw(screen)
 
     def On(self):
         self.Trigger = True
