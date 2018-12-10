@@ -215,7 +215,7 @@ class SceneLoader:
                         if self.Guess.clickCheck() == 'InputAnswer':
                             guessword =""
                             keyInput = True
-                        if event.type == pygame.MOUSEBUTTONDOWN and reDraw == True:
+                        if event.type == pygame.MOUSEBUTTONDOWN and reDraw == True and self.Guess.Trigger == True:
                             self.Guess.Off()
                             self.Drawing.Off()
                             self.ReadyDraw.On()
