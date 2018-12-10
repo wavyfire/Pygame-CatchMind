@@ -2,4 +2,12 @@ cat
 dog
 bear
 tree
-elephant
+bow
+ball
+water
+star
+can
+sun
+eye
+nose
+mouth

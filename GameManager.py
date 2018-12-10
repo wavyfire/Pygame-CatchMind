@@ -86,7 +86,8 @@ class SceneLoader:
 
             if self.Result.Trigger:
                 self.Result.startScene(screen)
-
+                if self.Result.Trigger_ScoreBoard == 1:
+                    self.Result.printScoreBoard(screen)
 
             for event in pygame.event.get():
 
@@ -126,6 +127,7 @@ class SceneLoader:
                                     elif a >= b :
                                         reDraw = True
                                         keyInput = False
+                                        self.Guess.AddScore(d)
                                         self.Guess.Off()
                                         self.Result.On()
                                         screen.blit(self.background, (0, 0))
@@ -259,8 +261,9 @@ class SceneLoader:
 
                     # Result Scene Click Event
                     if self.Result.Trigger:
-                        if self.Result.clickCheck() == "ScoreBoard":
-                            self.Result.WinnerCheck(screen)
+                        self.Result.setScoreBoard()
+                        self.Result.Trigger_ScoreBoard = 1
+                        self.Result.WinnerCheck(screen)
                         if self.Result.clickCheck() == "Quit":
                             done = True
 

@@ -72,11 +72,11 @@ class ScoreHandler:
 
     def makeLimit(self):
         if self.PlayerNumbers == 2:
-            self.Limit = 5
+            self.Limit = 4  # 0부터라 실상은 홀수.
         if self.PlayerNumbers == 3:
-            self.Limit = 7
+            self.Limit = 6
         if self.PlayerNumbers == 4:
-            self.Limit = 9
+            self.Limit = 8
 
     def NowQuizNum(self):
         return self.NowQuizNumber
@@ -91,9 +91,8 @@ class ScoreHandler:
             for key, value in player.items():
                 if value > othervalue:
                     othervalue = value
-                    otherplayer = player
-                else:
-                    return otherplayer
+                    otherplayer = key
+        return otherplayer
 
 
 
