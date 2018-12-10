@@ -60,6 +60,8 @@ class SceneLoader:
 
             if self.ReadyDraw.Trigger:
                 self.ReadyDraw.startScene(screen)
+                if self.ReadyDraw.Trigger_ScoreBoard:
+                    self.ReadyDraw.printScoreBoard(screen)
                 # 랜덤 단어를 창에 표시
                 if self.ReadyDraw.Trigger_Message:
                     self.ReadyDraw.printMessage(screen)
@@ -67,6 +69,7 @@ class SceneLoader:
             if self.Drawing.Trigger:
                 self.Drawing.addScene(screen, color, size) # 마찬가지의 AddScene. 순서가 바뀌면 그려지는 순서가 달라져서 버그발생.
                 self.Drawing.startScene(screen)
+                self.Drawing.DisplayTurn()
                 if 150 <= mouseX and mouseX <= 1140 and 0 <= mouseY and mouseY <= 600 and mouseflag == True:
                     self.Drawing.Sketch(screen, color, size, mouseX, mouseY) # Mouseflag는 아래 Event에서 전환됩니다.
 
@@ -108,8 +111,11 @@ class SceneLoader:
                                     b = self.Guess.NowQuizLimit()
                                     if a <= b :
                                         self.Guess.Correct(screen)
-                                        c = self.Guess.Trigger_PlayerCheck
+                                        print(" $$$" , self.Guess.Trigger_PlayerCheck)
+                                        print(" $$$", self.Guess.NowPlaying())
+                                        c = self.Guess.NowPlaying()
                                         d = str("player" + str(c))
+                                        print(d)
                                         self.Guess.AddScore(d)
                                         reDraw = True
                                         keyInput = False
@@ -235,6 +241,8 @@ class SceneLoader:
                             self.ReadyDraw.getWord()
                             self.ReadyDraw.setWordText()
                             self.ReadyDraw.Trigger_Message = True
+                            self.ReadyDraw.setScoreBoard()
+                            self.ReadyDraw.Trigger_ScoreBoard = True
                             reDraw = False
                             screen.blit(self.background, (0, 0))
                             pygame.display.flip()

@@ -148,6 +148,7 @@ class ReadyDraw(Scenes):
 
         self.Trigger = False
         self.Trigger_Message = False
+        self.Trigger_ScoreBoard = False
 
         self.WordHandler = WordDB.FileHandler()
 
@@ -160,8 +161,6 @@ class ReadyDraw(Scenes):
         self.ReadyButton.draw(screen)
         self.RegetWordButton.draw(screen)
         self.ScoreBoard.draw(screen)
-        for text in self.ScoreTextList:
-            text.draw(screen)
 
     def setScoreBoard(self):
         self.ScoreTextList = []
@@ -171,6 +170,10 @@ class ReadyDraw(Scenes):
         for scoretext in text:
             self.ScoreTextList.append(Font((scoretext), (0,0,0), 30, (120, y)))
             y += 50
+
+    def printScoreBoard(self, screen):
+        for text in self.ScoreTextList:
+            text.draw(screen)
 
     def printMessage(self, screen):
         self.WordText.draw(screen)
@@ -385,6 +388,10 @@ class Guess(Scenes):
 
     def NowQuizLimit(self):
         return ScoreHandler.QuizLimit()
+
+    def NowPlaying(self):
+        return ScoreHandler.NowPlaying
+
 
 
     def On(self):
