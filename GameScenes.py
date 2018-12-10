@@ -213,8 +213,7 @@ class Drawing(Scenes):
         self.DoneButton = Button((0, 0), 'images/Done.png')
         self.QuitButton = Button((1180, 0), 'images/QuitButton.png')
 
-        # 누가 그림을 그리고 있는지 알려주는 메시지
-        self.NowDrawing = Font('Player '+ str(ScoreHandler.getTurn()) + ' \'s Drawing!', (0,0,0), 50, (630, 50))
+
 
         self.Trigger = 0
 
@@ -230,6 +229,7 @@ class Drawing(Scenes):
         self.Eraser.draw(screen)
         self.DoneButton.draw(screen)
         self.QuitButton.draw(screen)
+        self.DisplayTurn()
         self.NowDrawing.draw(screen)
 
     def clickCheck(self):
@@ -279,6 +279,10 @@ class Drawing(Scenes):
             self.CheckRemover = Button((1100, 680), 'images/CheckRemover.png')
             self.CheckRemover.draw(screen)
             self.DotCheck.draw(screen)
+
+    def DisplayTurn(self):
+        # 누가 그림을 그리고 있는지 알려주는 메시지
+        self.NowDrawing = Font('Player ' + str(ScoreHandler.getTurn()) + ' \'s Drawing!', (0, 0, 0), 50, (630, 50))
 
     def On(self):
         self.Trigger = True
@@ -366,6 +370,9 @@ class Guess(Scenes):
 
     def Correct(self, screen):
         self.CorrectMark.draw(screen)
+
+    def NextTrun(self):
+        ScoreHandler.changeTurn()
 
     def On(self):
         self.Trigger = True
