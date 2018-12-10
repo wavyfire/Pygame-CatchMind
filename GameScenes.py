@@ -152,6 +152,9 @@ class ReadyDraw(Scenes):
 
         self.WordHandler = WordDB.FileHandler()
 
+        #시작 시 첫번째 턴으로 설정
+        ScoreHandler.setTurn()
+
     def startScene(self, screen):
         self.QuitButton.draw(screen)
         self.GetWordButton.draw(screen)
@@ -200,6 +203,10 @@ class Drawing(Scenes):
         self.Eraser = Button((1138, 640), 'images/Eraser.png')
         self.DoneButton = Button((0, 0), 'images/Done.png')
         self.QuitButton = Button((1180, 0), 'images/QuitButton.png')
+
+        # 누가 그림을 그리고 있는지 알려주는 메시지
+        self.NowDrawing = Font('Player '+ str(ScoreHandler.getTurn()) + ' \'s Drawing!', (0,0,0), 50, (630, 50))
+
         self.Trigger = 0
 
     def startScene(self,screen):
@@ -214,6 +221,7 @@ class Drawing(Scenes):
         self.Eraser.draw(screen)
         self.DoneButton.draw(screen)
         self.QuitButton.draw(screen)
+        self.NowDrawing.draw(screen)
 
     def clickCheck(self):
         if self.SketchBook.clickChecker():
@@ -277,6 +285,12 @@ class Guess(Scenes):
         self.BackToDraw = Button((10, 70), 'images/BackToDraw.png')
         self.DrawBackGround = pygame.image.load('images/GuessBackGround.png')
         self.QuitButton = Button((1180, 0), 'images/QuitButton.png')
+
+        # PlayerButton 자체는 startScene() 에서 생성 : 플레이어 수가 정해지고 나서 버튼 수가 결정되기 때문
+        self.PlayerButtonList = []
+
+        self.Trigger_PlayerCheck = 0
+
         self.Trigger = 0
 
     def startScene(self,screen):
@@ -284,12 +298,38 @@ class Guess(Scenes):
         self.BackToDraw.draw(screen)
         self.QuitButton.draw(screen)
 
+        # Player수, Turn에 따른 버튼 출력과 check 표시를 용이하게 하기 위해 튜플로 번호 및 좌표 관리
+        # Player수에 맞춰서 버튼 생성
+        y_plus = 100
+        y = 200
+        for playernumber in range(1, ScoreHandler.getPlayers() + 1):
+            playername = 'Player ' + str(playernumber)
+            path = 'images/Player' + str(playernumber) + 'Button.png'
+            self.PlayerButtonList.append(( Button((10, y + y_plus), path), playernumber , (10, y + y_plus), playername))
+            y = y + y_plus
+
+        # 그림을 그리고 있는 player는 버튼 출력이 되지 않음
+        for playerbutton in self.PlayerButtonList:
+            if playerbutton[1] <= ScoreHandler.getPlayers():
+                if playerbutton[1] == ScoreHandler.getTurn():
+                    continue
+                playerbutton[0].draw(screen)
+
+    # plyaer 가 check 되었을 때 체크 표시
+    def addScene(self, screen, playernumber):
+        for playerbutton in self.PlayerButtonList:
+            if playerbutton[1] == playernumber:
+                playercheckpannel = Button(playerbutton[2], 'images/PlayerCheck.png')
+                playercheckpannel.draw(screen)
 
     def clickCheck(self):
         if self.BackToDraw.clickChecker():
             return 'BackToDraw'
         if self.QuitButton.clickChecker():
             return 'Quit'
+        for playerbutton in self.PlayerButtonList:
+            if playerbutton[0].clickChecker():
+                return playerbutton[3]
 
     def On(self):
         self.Trigger = True

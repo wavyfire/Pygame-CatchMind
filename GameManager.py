@@ -44,7 +44,7 @@ class SceneLoader:
             # Trigger가 True일 때, 해당 Scene이 출력
             if self.Main.Trigger:
                 self.Main.startScene(screen)
-                self.Main.addScene(screen, GameScenes.ScoreHandler.PlayerNumbers) # addScene은 체크표시 같은 추가 화면을 표현해줍니다.
+                self.Main.addScene(screen, GameScenes.ScoreHandler.getPlayers()) # addScene은 체크표시 같은 추가 화면을 표현해줍니다.
                 # Player 수가 선택되지 않고 스타트를 눌렀을 때의 경고메시지
                 if self.Main.Trigger_Message:
                     self.Main.printMessage(screen)
@@ -66,6 +66,14 @@ class SceneLoader:
 
             if self.Guess.Trigger:
                 self.Guess.startScene(screen)
+                if self.Guess.Trigger_PlayerCheck == 1:
+                    self.Guess.addScene(screen, 1)
+                if self.Guess.Trigger_PlayerCheck == 2:
+                    self.Guess.addScene(screen, 2)
+                if self.Guess.Trigger_PlayerCheck == 3:
+                    self.Guess.addScene(screen, 3)
+                if self.Guess.Trigger_PlayerCheck == 4:
+                    self.Guess.addScene(screen, 4)
 
             if self.Result.Trigger:
                 self.Result.startScene(screen)
@@ -162,6 +170,14 @@ class SceneLoader:
                         if self.Guess.clickCheck() == 'BackToDraw':
                             self.Guess.Off()
                             self.Drawing.On()
+                        if self.Guess.clickCheck() == 'Player 1':
+                            self.Guess.Trigger_PlayerCheck = 1
+                        if self.Guess.clickCheck() == 'Player 2':
+                            self.Guess.Trigger_PlayerCheck = 2
+                        if self.Guess.clickCheck() == 'Player 3':
+                            self.Guess.Trigger_PlayerCheck = 3
+                        if self.Guess.clickCheck() == 'Player 4':
+                            self.Guess.Trigger_PlayerCheck = 4
                         if self.Drawing.clickCheck() == 'Quit':
                             done = True
 

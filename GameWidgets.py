@@ -20,6 +20,8 @@ class Button(pygame.sprite.Sprite):
         if (center[0] <= mouseX < center[0] + (w) and center[1]<= mouseY < center[1] + h):
             # 이미지 생성 위치와 이미지 크기가 안맞아서 이렇게 해야합니다.
             return True
+        else:
+            return False
 
 #글자 생성 클래스
 class Font:
