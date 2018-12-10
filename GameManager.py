@@ -106,8 +106,10 @@ class SceneLoader:
                                 if guessword == self.ReadyDraw.WordHandler.answer:
                                     self.Guess.Correct(screen)
                                     reDraw = True
+                                    keyInput = False
                                 elif guessword != self.ReadyDraw.WordHandler.answer:
                                     self.Guess.Wrong(screen)
+                                    keyInput = False
 
 
                 if event.type == pygame.QUIT:
@@ -211,6 +213,7 @@ class SceneLoader:
                         if self.Guess.clickCheck() == 'Quit':
                             done = True
                         if self.Guess.clickCheck() == 'InputAnswer':
+                            guessword =""
                             keyInput = True
                         if event.type == pygame.MOUSEBUTTONDOWN and reDraw == True:
                             self.Guess.Off()
